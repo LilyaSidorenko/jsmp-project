@@ -5,7 +5,7 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
-    "lint": "./frontend",
+    "lint": "eslint ./frontend/js"
   },
   "pre-commit": [ "lint", "test" ],
   "author": "",

@@ -12,7 +12,7 @@ NODE_ENV=production webpack
 //to check prod build
 
 
-node_modules/.bin/webpack-dev-server
+npm start
 
 npm test
 

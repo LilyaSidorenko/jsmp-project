@@ -5,8 +5,9 @@
   "main": "webpack.config.js",
   "scripts": {
     "test": "./node_modules/karma/bin/karma start karma.conf.js",
+    "lint": "./frontend",
   },
-  "pre-commit": [ "eslint-loader", "test" ],
+  "pre-commit": [ "lint", "test" ],
   "author": "",
   "license": "ISC",
   "devDependencies": {

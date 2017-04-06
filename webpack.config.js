@@ -1,6 +1,6 @@
-var path = require('path');
+const path = require('path');
 const webpack = require('webpack');
-var ExtractTextPlugin = require("extract-text-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
@@ -21,14 +21,15 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
+                loader: 'eslint-loader',
+            },
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
                 loader: 'babel-loader',
                 query: {presets: ['es2015']}
             },
-            // {
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,
-            //     loader: 'eslint-loader',
-            // },
+
             {
                 test: /\.scss$/,
                 loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', "sass-loader"]}),

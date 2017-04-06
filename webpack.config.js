@@ -1,6 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
@@ -40,10 +41,16 @@ module.exports = {
     stats: {
         colors: true
     },
+    devtool: NODE_ENV == 'development' ? 'cheap-inline-module-source-map' : false,
+
     plugins: [
         new ExtractTextPlugin('css/styles.css'),
         new webpack.DefinePlugin({
             NODE_ENV: JSON.stringify(NODE_ENV)
+        }),
+        new OptimizeCssAssetsPlugin({
+            assetNameRegExp: /\.css$/,
+            cssProcessorOptions: {discardComments: {removeAll: true}}
         }),
 
     ],
@@ -53,7 +60,6 @@ module.exports = {
         port: 9000,
         watchContentBase: true,
     },
-    devtool: NODE_ENV == 'development' ? 'cheap-inline-module-source-map' : null,
 
 };
 

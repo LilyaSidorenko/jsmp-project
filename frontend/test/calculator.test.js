@@ -19,7 +19,7 @@ describe('Calculator', function() {
 
     // call the init function of calculator to register DOM elements
     beforeEach(function() {
-        window.calculator.init();
+        getSum();
     });
 
     it('should return 3 for 1 + 2', function() {

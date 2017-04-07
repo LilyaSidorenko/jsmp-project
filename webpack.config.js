@@ -1,70 +1,14 @@
-const path = require('path');
-const webpack = require('webpack');
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const NODE_ENV = process.env.NODE_ENV || 'development';
-
-module.exports = {
-    context: __dirname + '/frontend',
-
-    entry: {
-        home: ['./js/calculator', './scss/add-list.scss']
-    },
-    output: {
-        path: __dirname + '/public',
-        filename: 'js/calculator.js'
-    },
-    watch: NODE_ENV == 'development',
-
-
-    module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'eslint-loader',
-            },
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                loader: 'babel-loader',
-                query: {presets: ['es2015']}
-            },
-
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: ['css-loader', "sass-loader"]}),
-            },
-        ]
-    },
-
-    stats: {
-        colors: true
-    },
-    devtool: NODE_ENV == 'development' ? 'cheap-inline-module-source-map' : false,
-
-    plugins: [
-        new ExtractTextPlugin('css/styles.css'),
-        new webpack.DefinePlugin({
-            NODE_ENV: JSON.stringify(NODE_ENV)
-        }),
-        new OptimizeCssAssetsPlugin({
-            assetNameRegExp: /\.css$/,
-            cssProcessorOptions: {discardComments: {removeAll: true}}
-        }),
-
-    ],
-    devServer: {
-        contentBase: path.join(__dirname, "public"),
-        compress: true,
-        port: 9000,
-        watchContentBase: true,
-    },
-
-};
-
-if (NODE_ENV == 'production') {
-    module.exports.plugins.push(
-        new webpack.optimize.UglifyJsPlugin()
-    )
+switch (process.env.NODE_ENV) {
+    case 'prod':
+    case 'production':
+        module.exports = require('./webpack.prod.config.js')({env: 'production'});
+        break;
+    case 'test':
+    case 'testing':
+        module.exports = require('./karma.conf')({env: 'test'});
+        break;
+    case 'dev':
+    case 'development':
+    default:
+        module.exports = require('./webpack.dev.config.js')({env: 'development'});
 }

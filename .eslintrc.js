@@ -16,6 +16,7 @@ module.exports = {
         'array-bracket-spacing': [2, 'never'],
         'camelcase': [2, {'properties': 'always'}],
         'keyword-spacing': [2],
-        'no-trailing-spaces': [2]
+        'no-trailing-spaces': [2],
+        'no-unused-vars': [0]
     },
 };

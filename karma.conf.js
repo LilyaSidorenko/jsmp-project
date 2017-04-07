@@ -1,32 +1,58 @@
-// Karma configuration
-// Generated on Thu Apr 06 2017 17:09:23 GMT+0300 (EEST)
+const webpack = require('webpack');
 
-module.exports = function(config) {
-  config.set({
-    basePath: '',
-    frameworks: ['jasmine'],
+module.exports = function (config) {
+    config.set({
+        basePath: '',
+        frameworks: ['jasmine'],
+        preprocessors: {
+            'frontend/js/calculator.js': ['babel', 'coverage'],
+            'frontend/test/*.js': ['babel', 'webpack']
 
-    files: [
-        'public/js/*.js',
-        'frontend/test/*.js'
-    ],
-    exclude: [
-    ],
-    preprocessors: {
-    },
 
-    reporters: ['progress'],
+        },
+        babelPreprocessor: {
+            options: {
+                presets: ['es2015'],
+                sourceMap: 'inline'
+            },
+            filename: function (file) {
+                return file.originalPath.replace(/\.js$/, '.es5.js');
+            },
+            sourceFileName: function (file) {
+                return file.originalPath;
+            }
+        },
+        webpack: {
 
-    port: 9876,
+        },
 
-    colors: true,
+        files: [
+            'frontend/js/calculator.js',
+            'frontend/test/*.js'
+        ],
 
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['PhantomJS'],
+        plugins: [
+            require("karma-jasmine"),
+            require("karma-webpack"),
+            require("karma-coverage"),
+            require("karma-phantomjs-launcher"),
+            require("karma-babel-preprocessor"),
+            require("babel-preset-es2015"),
+        ],
+        exclude: [],
 
-    singleRun: true,
+        reporters: ['progress', 'coverage'],
 
-    concurrency: Infinity
-  })
-}
+        port: 9876,
+
+        colors: true,
+
+        logLevel: config.LOG_INFO,
+        autoWatch: true,
+        browsers: ['PhantomJS'],
+
+        singleRun: true,
+
+        concurrency: Infinity
+    })
+};

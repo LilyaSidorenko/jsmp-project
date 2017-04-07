@@ -1,13 +1,18 @@
-let getIntById = function(id) {
-    return parseInt(document.getElementById(id).value, 10);
-};
+'use strict';
 
-let calculate = function() {
-    let sum = getIntById('x') + getIntById('y');
-    document.getElementById('result').innerHTML = isNaN(sum) ? 0 : sum;
-};
+window.calculator = window.calculator || {};
 
-let getSum = function() {
-    document.getElementById('add').addEventListener('click', calculate);
-};
+(function() {
+    var getIntById = function(id) {
+        return parseInt(document.getElementById(id).value, 10);
+    };
 
+    var calculate = function() {
+        var sum = getIntById('x') + getIntById('y');
+        document.getElementById('result').innerHTML = isNaN(sum) ? 0 : sum;
+    };
+
+    window.calculator.init = function() {
+        document.getElementById('add').addEventListener('click', calculate);
+    };
+})();

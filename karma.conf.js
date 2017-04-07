@@ -1,40 +1,20 @@
 const webpack = require('webpack');
+const webpackConfig = require('./webpack.config.js');
 
 module.exports = function (config) {
     config.set({
         basePath: '',
         frameworks: ['jasmine'],
+        files: ['frontend/test/calculator.test.js', 'frontend/js/calculator.js'],
         preprocessors: {
-            'frontend/js/calculator.js': ['babel', 'coverage'],
-            'frontend/test/*.js': ['babel', 'webpack']
-
-
+            'frontend/js/calculator.test.js': ['webpack']
         },
-        babelPreprocessor: {
-            options: {
-                presets: ['es2015'],
-                sourceMap: 'inline'
-            },
-            filename: function (file) {
-                return file.originalPath.replace(/\.js$/, '.es5.js');
-            },
-            sourceFileName: function (file) {
-                return file.originalPath;
-            }
-        },
-        webpack: {
-
-        },
-
-        files: [
-            'frontend/js/calculator.js',
-            'frontend/test/*.js'
-        ],
-
+        webpack: webpackConfig,
         plugins: [
             require("karma-jasmine"),
             require("karma-webpack"),
             require("karma-coverage"),
+            require("babel-loader"),
             require("karma-phantomjs-launcher"),
             require("karma-babel-preprocessor"),
             require("babel-preset-es2015"),
